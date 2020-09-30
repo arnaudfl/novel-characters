@@ -110,7 +110,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Dashboard = () => {
+interface DashboardProps {
+  signOut: (event: React.MouseEvent<HTMLDivElement>) => void,
+}
+
+const Dashboard = ({ signOut }: DashboardProps) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -140,7 +144,7 @@ const Dashboard = () => {
           <div className={classes.root}>
             <CssBaseline />
             <MainMenu open={open} classes={classes} handleDrawerOpen={handleDrawerOpen} />
-            <SideMenu open={open} classes={classes} handleDrawerClose={handleDrawerClose} />
+            <SideMenu open={open} classes={classes} handleDrawerClose={handleDrawerClose} signOut={signOut} />
             <main className={classes.content}>
               <div className={classes.appBarSpacer} />
               <Container maxWidth="lg" className={classes.container}>

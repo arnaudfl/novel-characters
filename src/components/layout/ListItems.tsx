@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
-import * as firebase from 'firebase/app';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -34,15 +33,19 @@ export const MainListItems = () => {
   );
 };
 
-export const secondaryListItems = (
-  <div>
-    <ListItem button onClick={() => {
-      firebase.auth().signOut();
-    }}>
-      <ListItemIcon>
-        <PowerSettingsNewIcon />
-      </ListItemIcon>
-      <ListItemText primary="Logout" />
-    </ListItem>
-  </div>
-);
+interface SecondaryListItemsProps {
+  signOut: (event: React.MouseEvent<HTMLDivElement>) => void,
+}
+
+export const SecondaryListItems = ({ signOut }: SecondaryListItemsProps) => {
+  return (
+    <div>
+      <ListItem button onClick={signOut}>
+        <ListItemIcon>
+          <PowerSettingsNewIcon />
+        </ListItemIcon>
+        <ListItemText primary="Logout" />
+      </ListItem>
+    </div>
+  )
+};

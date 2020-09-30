@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  HashRouter,
-  Switch,
-  Route,
-} from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import {
@@ -13,41 +9,32 @@ import {
 } from '@react-firebase/auth';
 import { config } from './config/config';
 
+import SignIn from './components/login/SignIn';
 import Dashboard from './components/Dashboard';
 
 function App() {
-  const test = false;
+  const signInWithGoogle = React.useCallback(() => {
+    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(googleAuthProvider);
+  }, []);
+  const signInAnonymously = React.useCallback(() => {
+    firebase.auth().signInAnonymously();
+  }, []);
+  const signOut = React.useCallback(() => {
+    firebase.auth().signOut();
+  }, []);
   return (
     <>
       <HashRouter>
         <FirebaseAuthProvider {...config} firebase={firebase}>
           <IfFirebaseUnAuthed>
             {() => {
-              return (
-                <>
-                  <button
-                    onClick={() => {
-                      const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-                      firebase.auth().signInWithPopup(googleAuthProvider);
-                    }}
-                  >
-                    Sign In with Google
-                  </button>
-                  <button
-                    data-testid="signin-anon"
-                    onClick={() => {
-                      firebase.auth().signInAnonymously();
-                    }}
-                  >
-                    Sign In Anonymously
-                  </button>
-                </>
-              )
+              return <SignIn signInWithGoogle={signInWithGoogle} signInAnonymously={signInAnonymously} />
             }}
           </IfFirebaseUnAuthed>
           <IfFirebaseAuthed>
             {() => {
-              return <Dashboard />;
+              return <Dashboard signOut={signOut} />;
             }}
           </IfFirebaseAuthed>
         </FirebaseAuthProvider>

@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
-import { MainListItems, secondaryListItems } from './ListItems';
+import { MainListItems, SecondaryListItems } from './ListItems';
 
 interface ClassesProps {
     drawerPaper: string,
@@ -18,9 +18,10 @@ interface SideMenuProps {
     open: boolean,
     classes: ClassesProps,
     handleDrawerClose: (event: React.MouseEvent<HTMLButtonElement>) => void,
+    signOut: (event: React.MouseEvent<HTMLDivElement>) => void,
 }
 
-const SideMenu = ({ open, classes, handleDrawerClose }: SideMenuProps) => {
+const SideMenu = ({ open, classes, handleDrawerClose, signOut }: SideMenuProps) => {
     return (
         <Drawer
             variant="permanent"
@@ -39,7 +40,9 @@ const SideMenu = ({ open, classes, handleDrawerClose }: SideMenuProps) => {
                 <MainListItems />
             </List>
             <Divider />
-            <List>{secondaryListItems}</List>
+            <List>
+                <SecondaryListItems signOut={signOut} />
+            </List>
       </Drawer>
     );
 };
