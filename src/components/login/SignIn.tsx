@@ -1,26 +1,21 @@
 import React from 'react';
+import { useTranslation } from "react-i18next";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="#">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Copyright from '../layout/Copyright';
+import GoogleLogo from '../../styles/images/google_logo.svg';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -43,12 +38,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface SignInProps {
-  signInWithGoogle: (event: React.MouseEvent<HTMLButtonElement>) => void,
-  signInAnonymously: (event: React.MouseEvent<HTMLButtonElement>) => void,
+  signInWithGoogle: (event: React.MouseEvent<HTMLDivElement>) => void,
+  signInAnonymously: (event: React.MouseEvent<HTMLDivElement>) => void,
 }
 
 const SignIn = ({ signInWithGoogle, signInAnonymously }: SignInProps) => {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -58,29 +54,75 @@ const SignIn = ({ signInWithGoogle, signInAnonymously }: SignInProps) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          {t('signin.title')}
         </Typography>
         <form className={classes.form} noValidate>
+        <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+          />
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          />
           <Button
             type="button"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={signInWithGoogle}
           >
-            Sign In with Google
+            {t('signin.button.signin')}
           </Button>
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={signInAnonymously}
-          >
-            Sign In Anonymously
-          </Button>
+          <Grid container>
+            <Grid item xs>
+              <div className="google-btn" onClick={signInWithGoogle}>
+                <div className="google-icon-wrapper">
+                  <img alt="Google" className="google-icon" src={GoogleLogo} />
+                </div>
+                <p className="btn-text"><b>{t('signin.button.signinwithgoogle')}</b></p>
+              </div>
+            </Grid>
+            <Grid item>
+              <div className="google-btn" onClick={signInAnonymously}>
+                <div className="google-icon-wrapper">
+                  <img alt="Google" className="google-icon" src={GoogleLogo} />
+                </div>
+                <p className="btn-text"><b>{t('signin.button.signinanon')}</b></p>
+              </div>
+            </Grid>
+          </Grid>
+          <br />
+          <Grid container>
+            <Grid item xs>
+              <Link href="#" variant="body2">
+                {t('signin.forgotpassword')}
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href="#" variant="body2">
+                {t('signin.signup')}
+              </Link>
+            </Grid>
+          </Grid>
         </form>
       </div>
       <Box mt={8}>
