@@ -1,5 +1,8 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
+import Launch from '../layout/Launch';
 import Copyright from '../layout/Copyright';
 import GoogleLogo from '../../styles/images/google_logo.svg';
 
@@ -35,6 +39,11 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  loading: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
 }));
 
 interface SignInProps {
@@ -46,89 +55,98 @@ const SignIn = ({ signInWithGoogle, signInAnonymously }: SignInProps) => {
   const classes = useStyles();
   const { t } = useTranslation();
 
+  const isSignedIn = React.useMemo(() => localStorage.getItem('isSignedIn'), []);
+
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          {t('signin.title')}
-        </Typography>
-        <form className={classes.form} noValidate>
-        <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            {t('signin.button.signin')}
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <div className="google-btn" onClick={signInWithGoogle}>
-                <div className="google-icon-wrapper">
-                  <img alt="Google" className="google-icon" src={GoogleLogo} />
-                </div>
-                <p className="btn-text"><b>{t('signin.button.signinwithgoogle')}</b></p>
-              </div>
-            </Grid>
-            <Grid item>
-              <div className="google-btn" onClick={signInAnonymously}>
-                <div className="google-icon-wrapper">
-                  <img alt="Google" className="google-icon" src={GoogleLogo} />
-                </div>
-                <p className="btn-text"><b>{t('signin.button.signinanon')}</b></p>
-              </div>
-            </Grid>
-          </Grid>
-          <br />
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                {t('signin.forgotpassword')}
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {t('signin.signup')}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
+    <>
+      {isSignedIn &&
+        <Launch />
+      }
+      {!isSignedIn &&
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                  <LockOutlinedIcon />
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                  {t('signin.title')}
+                </Typography>
+                <form className={classes.form} noValidate>
+                <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                  />
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="current-password"
+                  />
+                  <FormControlLabel
+                    control={<Checkbox value="remember" color="primary" />}
+                    label="Remember me"
+                  />
+                  <Button
+                    type="button"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    {t('signin.button.signin')}
+                  </Button>
+                  <Grid container>
+                    <Grid item xs>
+                      <div className="google-btn" onClick={signInWithGoogle}>
+                        <div className="google-icon-wrapper">
+                          <img alt="Google" className="google-icon" src={GoogleLogo} />
+                        </div>
+                        <p className="btn-text"><b>{t('signin.button.signinwithgoogle')}</b></p>
+                      </div>
+                    </Grid>
+                    <Grid item>
+                      <div className="google-btn" onClick={signInAnonymously}>
+                        <div className="google-icon-wrapper">
+                          <img alt="Google" className="google-icon" src={GoogleLogo} />
+                        </div>
+                        <p className="btn-text"><b>{t('signin.button.signinanon')}</b></p>
+                      </div>
+                    </Grid>
+                  </Grid>
+                  <br />
+                  <Grid container>
+                    <Grid item xs>
+                      <Link href="#" variant="body2">
+                        {t('signin.forgotpassword')}
+                      </Link>
+                    </Grid>
+                    <Grid item>
+                      <Link href="#" variant="body2">
+                        {t('signin.signup')}
+                      </Link>
+                    </Grid>
+                  </Grid>
+                </form>
+          </div>
+          <Box mt={8}>
+            <Copyright />
+          </Box>
+        </Container>
+      }
+    </>
   );
 }
 

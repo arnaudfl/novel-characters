@@ -18,10 +18,15 @@ interface SideMenuProps {
     open: boolean,
     classes: ClassesProps,
     handleDrawerClose: (event: React.MouseEvent<HTMLButtonElement>) => void,
-    signOut: (event: React.MouseEvent<HTMLDivElement>) => void,
+    signOut: Function,
 }
 
 const SideMenu = ({ open, classes, handleDrawerClose, signOut }: SideMenuProps) => {
+    const onClickSignOut = React.useCallback(() => {
+        localStorage.removeItem('isSignedIn');
+        signOut();
+    }, [signOut]);
+
     return (
         <Drawer
             variant="permanent"
@@ -41,7 +46,7 @@ const SideMenu = ({ open, classes, handleDrawerClose, signOut }: SideMenuProps) 
             </List>
             <Divider />
             <List>
-                <SecondaryListItems signOut={signOut} />
+                <SecondaryListItems onClickSignOut={onClickSignOut} />
             </List>
       </Drawer>
     );

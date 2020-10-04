@@ -34,13 +34,13 @@ export const MainListItems = () => {
 };
 
 interface SecondaryListItemsProps {
-  signOut: (event: React.MouseEvent<HTMLDivElement>) => void,
+  onClickSignOut: (event: React.MouseEvent<HTMLDivElement>) => void,
 }
 
-export const SecondaryListItems = ({ signOut }: SecondaryListItemsProps) => {
+export const SecondaryListItems = ({ onClickSignOut }: SecondaryListItemsProps) => {
   return (
     <div>
-      <ListItem button onClick={signOut}>
+      <ListItem button onClick={onClickSignOut}>
         <ListItemIcon>
           <PowerSettingsNewIcon />
         </ListItemIcon>

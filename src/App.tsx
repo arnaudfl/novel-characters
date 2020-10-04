@@ -7,40 +7,40 @@ import {
   IfFirebaseAuthed,
   IfFirebaseUnAuthed,
 } from '@react-firebase/auth';
-import { config } from './config/config';
+import { firebaseConfig } from './config/config';
 
 import SignIn from './components/login/SignIn';
 import Dashboard from './components/Dashboard';
 
-function App() {
-  const signInWithGoogle = React.useCallback(() => {
+const App = () => {
+  const signInWithGoogle = React.useCallback(async () => {
     const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(googleAuthProvider);
+    await firebase.auth().signInWithPopup(googleAuthProvider);
   }, []);
-  const signInAnonymously = React.useCallback(() => {
-    firebase.auth().signInAnonymously();
+  const signInAnonymously = React.useCallback(async () => {
+    await firebase.auth().signInAnonymously();
   }, []);
-  const signOut = React.useCallback(() => {
-    firebase.auth().signOut();
+  const signOut = React.useCallback(async () => {
+    await firebase.auth().signOut();
   }, []);
   return (
     <>
       <HashRouter>
-        <FirebaseAuthProvider {...config} firebase={firebase}>
+        <FirebaseAuthProvider {...firebaseConfig} firebase={firebase}>
           <IfFirebaseUnAuthed>
-            {() => {
-              return <SignIn signInWithGoogle={signInWithGoogle} signInAnonymously={signInAnonymously} />
-            }}
+            {() =>
+              <SignIn signInWithGoogle={signInWithGoogle} signInAnonymously={signInAnonymously} />
+            }
           </IfFirebaseUnAuthed>
           <IfFirebaseAuthed>
-            {() => {
-              return <Dashboard signOut={signOut} />;
-            }}
+            {() =>
+              <Dashboard signOut={signOut} />
+            }
           </IfFirebaseAuthed>
         </FirebaseAuthProvider>
       </HashRouter>
     </>
   );
-}
+};
 
 export default App;

@@ -4,6 +4,9 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, ThemeProvider, makeStyles } from '@material-ui/core/styles';
@@ -103,6 +106,31 @@ interface DashboardProps {
 const Dashboard = ({ signOut }: DashboardProps) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+
+  /* const [user, setUser] = React.useState(null);
+  React.useEffect(() => {
+    let unsubscribe: () => void;
+    const getUser = async () => {
+      unsubscribe = await firebase.checkUserAuth(user => setUser(user));
+    };
+    getUser();
+    return function cleanup() {
+      unsubscribe();
+    };
+  }, []); */
+
+  React.useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        // User just signed in, we should not display dialog next time because of firebase auto-login
+        localStorage.setItem('isSignedIn', '1');
+      } else {
+        // User just signed-out or auto-login failed, we will show sign-in form immediately the next time he loads the page
+        localStorage.removeItem('isSignedIn');
+      }
+    })
+  }, []);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
