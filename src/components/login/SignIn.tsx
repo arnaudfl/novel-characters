@@ -1,7 +1,5 @@
 import React from 'react';
 import { useTranslation } from "react-i18next";
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -79,7 +77,7 @@ const SignIn = ({ signInWithGoogle, signInAnonymously }: SignInProps) => {
                     required
                     fullWidth
                     id="email"
-                    label="Email Address"
+                    label={t('signin.label.email')}
                     name="email"
                     autoComplete="email"
                     autoFocus
@@ -90,14 +88,14 @@ const SignIn = ({ signInWithGoogle, signInAnonymously }: SignInProps) => {
                     required
                     fullWidth
                     name="password"
-                    label="Password"
+                    label={t('signin.label.password')}
                     type="password"
                     id="password"
                     autoComplete="current-password"
                   />
                   <FormControlLabel
                     control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
+                    label={t('signin.label.rememberme')}
                   />
                   <Button
                     type="button"

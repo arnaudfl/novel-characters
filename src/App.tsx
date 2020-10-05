@@ -23,6 +23,7 @@ const App = () => {
   const signOut = React.useCallback(async () => {
     await firebase.auth().signOut();
   }, []);
+
   return (
     <>
       <HashRouter>

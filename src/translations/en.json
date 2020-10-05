@@ -7,6 +7,11 @@
         "title": "Sign in",
         "forgotpassword": "Forgot password?",
         "signup": "Don't have an account? Sign Up",
+        "label": {
+            "email": "Email address",
+            "password": "Password",
+            "rememberme": "Remember me"
+        },
         "button": {
             "signin": "Sign In",
             "signinwithgoogle": "Sign In with Google",
