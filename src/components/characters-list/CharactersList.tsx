@@ -14,13 +14,13 @@ interface CharactersListProps {
 
 const CharactersList = ({ classes }: CharactersListProps) => {
     return (
-        <>
-          <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <CharactersTable />
-              </Paper>
-            </Grid>
-        </>
+      <>
+        <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <CharactersTable />
+            </Paper>
+          </Grid>
+      </>
     );
 }
 

@@ -136,8 +136,7 @@ const Dashboard = ({ signOut }: DashboardProps) => {
   };
   const handleDrawerClose = () => {
     setOpen(false);
-  };
-  // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  };;
 
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 

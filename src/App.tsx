@@ -11,6 +11,7 @@ import { firebaseConfig } from './config/config';
 
 import SignIn from './components/login/SignIn';
 import Dashboard from './components/Dashboard';
+import WithSplashScreen from './components/splash-screen/WithSplashScreen';
 
 const App = () => {
   const signInWithGoogle = React.useCallback(async () => {
@@ -44,4 +45,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default WithSplashScreen(App);

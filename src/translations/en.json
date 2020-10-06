@@ -17,5 +17,18 @@
             "signinwithgoogle": "Sign In with Google",
             "signinanon": "Sign In Anonymously"
         }
+    },
+    "characters": {
+        "title": "Recent characters",
+        "tablehead": {
+            "date": "Date",
+            "name": "Name",
+            "age": "Age",
+            "occupation": "Occupation",
+            "role": "Role"
+        },
+        "button": {
+            "seemore": "See more characters"
+        }
     }
 }

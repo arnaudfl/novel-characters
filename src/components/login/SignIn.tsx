@@ -15,7 +15,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-import Launch from '../layout/Launch';
 import Copyright from '../layout/Copyright';
 import GoogleLogo from '../../styles/images/google_logo.svg';
 
@@ -57,9 +56,6 @@ const SignIn = ({ signInWithGoogle, signInAnonymously }: SignInProps) => {
 
   return (
     <>
-      {isSignedIn &&
-        <Launch />
-      }
       {!isSignedIn &&
         <Container component="main" maxWidth="xs">
           <CssBaseline />

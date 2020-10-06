@@ -1,6 +1,7 @@
 import React from 'react';
 import * as firebase from 'firebase';
 import { useList } from 'react-firebase-hooks/database';
+import { useTranslation } from "react-i18next";
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -9,31 +10,9 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-
-import { firebaseConfig } from '../../config/config';
-
 import Title from '../shared/Title';
 
-// Generate Order Data
-interface CreateDataProps {
-    id: string,
-    date: string,
-    name: string,
-    shipTo: string,
-    paymentMethod: string,
-    amount: number,
-}
-function createData(id: number, date: string, name: string, age: number, occupation: string, role: string) {
-  return { id, date, name, age, occupation, role };
-}
-
-const rows = [
-  createData(0, '16 Mar, 2019', 'Matt Suderland', 45, 'Hero', 'Master'),
-  createData(1, '16 Mar, 2019', 'Phil Rigor', 32, 'Singer', 'Major'),
-  createData(2, '16 Mar, 2019', 'Ellen Mitchell', 27, 'Journalist', 'Minor'),
-  createData(3, '16 Mar, 2019', 'Paula Cloud', 89, 'Driver', 'Master'),
-  createData(4, '15 Mar, 2019', 'Edgard Lazd', 21, 'Soldier', 'Major'),
-];
+import Alert from '@material-ui/lab/Alert';
 
 function preventDefault(event: any) {
   event.preventDefault();
@@ -50,8 +29,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Orders() {
+const CharactersTable = () => {
   const classes = useStyles();
+  const { t } = useTranslation();
+
   const [initializeApp, setInitializeApp] = React.useState(false);
   const [characters, setCharacters] = React.useState({});
 
@@ -78,42 +59,51 @@ export default function Orders() {
   const [snapshots, loading, error] = useList(charactersRef);
 
   return (
-    <React.Fragment>
-      <Title>Recent Characters</Title>
+    <>
+      <Title>{t('characters.title')}</Title>
+      {error &&
+        <Alert variant="filled" severity="error">
+          Error: {error}
+        </Alert>
+      }
       {loading &&
         <div className={classes.loading}>
           <CircularProgress />
         </div>
       }
       {!loading && snapshots &&
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Age</TableCell>
-              <TableCell>Occupation</TableCell>
-              <TableCell align="right">Role</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {snapshots.map((row) => (
-              <TableRow key={row.val().id}>
-                <TableCell>{row.val().createdAt}</TableCell>
-                <TableCell>{row.val().name}</TableCell>
-                <TableCell>{row.val().age}</TableCell>
-                <TableCell>{row.val().occupation}</TableCell>
-                <TableCell align="right">{row.val().role}</TableCell>
+        <>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>{t('characters.tablehead.date')}</TableCell>
+                <TableCell>{t('characters.tablehead.name')}</TableCell>
+                <TableCell>{t('characters.tablehead.age')}</TableCell>
+                <TableCell>{t('characters.tablehead.occupation')}</TableCell>
+                <TableCell align="right">{t('characters.tablehead.role')}</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHead>
+            <TableBody>
+              {snapshots.map((row) => (
+                <TableRow key={row.val().id}>
+                  <TableCell>{row.val().createdAt}</TableCell>
+                  <TableCell>{row.val().name}</TableCell>
+                  <TableCell>{row.val().age}</TableCell>
+                  <TableCell>{row.val().occupation}</TableCell>
+                  <TableCell align="right">{row.val().role}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <div className={classes.seeMore}>
+            <Link color="primary" href="#" onClick={preventDefault}>
+              {t('characters.button.seemore')}
+            </Link>
+          </div>
+        </>
       }
-      <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          See more orders
-        </Link>
-      </div>
-    </React.Fragment>
+    </>
   );
 }
+
+export default CharactersTable;
