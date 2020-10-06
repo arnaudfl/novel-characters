@@ -1,5 +1,7 @@
 # React App + Firebase Auth & Realtime Database
 
+:bangbang: **This project is under development, so it is not yet fully finalized.**
+
 This project built with [Create React App](https://github.com/facebook/create-react-app) allows you to add / modify / delete character sheets for novels. This application uses Firebase for authentication and database.
 
 ## :fire: Prerequisite (Environment variables)

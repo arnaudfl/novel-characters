@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Launch from '../layout/Launch';
 
-const WithSplashScreen = <P extends object>(
+const withSplashScreen = <P extends object>(
     WrappedComponent: React.ComponentType<P>
   ) => {
   return class extends Component<P, { loading: boolean }> {
@@ -37,4 +37,4 @@ const WithSplashScreen = <P extends object>(
   };
 }
 
-export default WithSplashScreen;
+export default withSplashScreen;
