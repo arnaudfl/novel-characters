@@ -1,0 +1,34 @@
+{
+    "app": {
+        "title": "Novel Characters",
+        "copyright": "Copyright © "
+    },
+    "signin": {
+        "title": "Sign in",
+        "forgotpassword": "Forgot password?",
+        "signup": "Don't have an account? Sign Up",
+        "label": {
+            "email": "Email address",
+            "password": "Password",
+            "rememberme": "Remember me"
+        },
+        "button": {
+            "signin": "Sign In",
+            "signinwithgoogle": "Sign In with Google",
+            "signinanon": "Sign In Anonymously"
+        }
+    },
+    "characters": {
+        "title": "Recent characters",
+        "tablehead": {
+            "date": "Date",
+            "name": "Name",
+            "age": "Age",
+            "occupation": "Occupation",
+            "role": "Role"
+        },
+        "button": {
+            "seemore": "See more characters"
+        }
+    }
+}
