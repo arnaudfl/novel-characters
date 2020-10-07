@@ -22,7 +22,11 @@ REACT_APP_FIREBASE_MESSAGING_SENDER_ID=497108424
 REACT_APP_FIREBASE_APP_ID=9:497108424:web:96ba329da5b0
 ```
 
-## Resources: Frameworks & libraries
+## :bulb: Documentation
+
+You can find an `.env_example` file, and the database schema in the `db/db.json` file, inside the `documentation/` directory at the root of the project.
+
+## :pushpin: Resources: Frameworks & libraries
 
 * React
 * Typescript
