@@ -18,7 +18,7 @@ const withSplashScreen = <P extends object>(
           this.setState({
             loading: false,
           });
-        }, 4000)
+        }, 2000)
       } catch (err) {
         console.log(err);
         this.setState({

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
+
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -10,6 +12,7 @@ import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 export const MainListItems = () => {
   const matchNew = useRouteMatch('/new');
   const matchList = useRouteMatch('/');
+  const { t } = useTranslation();
 
   return (
     <div>
@@ -18,7 +21,7 @@ export const MainListItems = () => {
           <ListItemIcon>
             <DashboardIcon />
           </ListItemIcon>
-          <ListItemText primary="Dashboard" />
+          <ListItemText primary={t('sidemenu.dashboard')} />
         </ListItem>
       </Link>
       <Link to="/new" style={{ textDecoration: 'none' }}>
@@ -26,7 +29,7 @@ export const MainListItems = () => {
           <ListItemIcon>
             <PeopleIcon />
           </ListItemIcon>
-          <ListItemText primary="Characters" />
+          <ListItemText primary={t('sidemenu.addcharacter')} />
         </ListItem>
       </Link>
     </div>
@@ -38,13 +41,15 @@ interface SecondaryListItemsProps {
 }
 
 export const SecondaryListItems = ({ onClickSignOut }: SecondaryListItemsProps) => {
+  const { t } = useTranslation();
+
   return (
     <div>
       <ListItem button onClick={onClickSignOut}>
         <ListItemIcon>
           <PowerSettingsNewIcon />
         </ListItemIcon>
-        <ListItemText primary="Logout" />
+        <ListItemText primary={t('sidemenu.logout')} />
       </ListItem>
     </div>
   )

@@ -11,7 +11,7 @@ import { firebaseConfig } from './config/config';
 
 import SignIn from './components/login/SignIn';
 import Dashboard from './components/Dashboard';
-import withSplashScreen from './components/splash-screen/withSplashScreen';
+import withSplashScreen from './components/hoc/withSplashScreen';
 
 const App = () => {
   const signInWithGoogle = React.useCallback(async () => {
