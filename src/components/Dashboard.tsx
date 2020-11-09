@@ -163,7 +163,7 @@ const Dashboard = ({ signOut }: DashboardProps) => {
               <Container maxWidth="lg" className={classes.container}>
                 <Switch>
                   <Route exact path="/">
-                    <CharactersList classes={classes} />
+                    <CharactersList />
                   </Route>
                   <Route path="/new">
                     New Character

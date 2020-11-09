@@ -1,9 +1,0 @@
-{
-    "characters": [
-        { "id": 1, "createdAt": "16 Mar, 2019", "name": "Matt Suderland", "age": 45, "occupation": "Hero", "role": "Master" },
-        { "id": 2, "createdAt": "16 Mar, 2019", "name": "Phil Rigor", "age": 32, "occupation": "Singer", "role": "Major" },
-        { "id": 3, "createdAt": "16 Mar, 2019", "name": "Ellen Mitchell", "age": 27, "occupation": "Journalist", "role": "Minor" },
-        { "id": 4, "createdAt": "16 Mar, 2019", "name": "Paula Cloud", "age": 58, "occupation": "Driver", "role": "Master" },
-        { "id": 5, "createdAt": "16 Mar, 2019", "name": "Edgard Lazd", "age": 21, "occupation": "Soldier", "role": "Major" }
-      ]
-}

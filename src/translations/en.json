@@ -3,6 +3,11 @@
         "title": "Novel Characters",
         "copyright": "Copyright © "
     },
+    "sidemenu": {
+        "dashboard": "Dashboard",
+        "addcharacter": "Add character",
+        "logout": "Logout"
+    },
     "signin": {
         "title": "Sign in",
         "forgotpassword": "Forgot password?",

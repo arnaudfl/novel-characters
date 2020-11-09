@@ -1,22 +1,12 @@
 import React from 'react';
 import * as firebase from 'firebase';
-import { useList } from 'react-firebase-hooks/database';
 import { useTranslation } from "react-i18next";
-import Link from '@material-ui/core/Link';
+import MUIDataTable, { MUIDataTableOptions } from "mui-datatables";
+
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Title from '../shared/Title';
 
 import Alert from '@material-ui/lab/Alert';
-
-function preventDefault(event: any) {
-  event.preventDefault();
-}
 
 const useStyles = makeStyles((theme) => ({
   seeMore: {
@@ -29,38 +19,91 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface CharactersProps {
+  id: number,
+  createdAt: string,
+  name: string,
+  age: number,
+  occupation: string,
+  role: string,
+}
+
 const CharactersTable = () => {
   const classes = useStyles();
   const { t } = useTranslation();
 
   const [initializeApp, setInitializeApp] = React.useState(false);
-  const [characters, setCharacters] = React.useState({});
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
+  const [characters, setCharacters] = React.useState([] as any);
 
   React.useEffect(() => {
     if (!initializeApp) {
       const database = firebase.database();
       database.ref('/characters').on('value', snapshot => {
-        let allCharacters: any[] = [];
-        console.log('SNAPSHOT', snapshot);
+        const allCharacters: any[] = [];
         snapshot.forEach(snap => {
           allCharacters.push(snap.val());
         });
-        setCharacters({ characters: allCharacters });
+        setCharacters(allCharacters);
         setInitializeApp(true);
+        setLoading(false);
       }, (error: any) => {
-        console.log(error);
+        setLoading(false);
+        setError(error);
       });
-
-    
     }
   }, [initializeApp, characters]);
 
-  const charactersRef = firebase.database().ref('/characters');
-  const [snapshots, loading, error] = useList(charactersRef);
+  const columns = [
+    {
+     name: "createdAt",
+     label: t('characters.tablehead.date'),
+     options: {
+      filter: false,
+      sort: true,
+     }
+    },
+    {
+     name: "name",
+     label: t('characters.tablehead.name'),
+     options: {
+      filter: false,
+      sort: true,
+     }
+    },
+    {
+     name: "age",
+     label: t('characters.tablehead.age'),
+     options: {
+      filter: false,
+      sort: true,
+     }
+    },
+    {
+     name: "occupation",
+     label: t('characters.tablehead.occupation'),
+     options: {
+      filter: false,
+      sort: true,
+     }
+    },
+    {
+      name: "role",
+      label: t('characters.tablehead.role'),
+      options: {
+       filter: true,
+       sort: true,
+      }
+     },
+   ];
+  
+  const options: MUIDataTableOptions = {
+    filterType: 'checkbox',
+  };
 
   return (
     <>
-      <Title>{t('characters.title')}</Title>
       {error &&
         <Alert variant="filled" severity="error">
           Error: {error}
@@ -71,35 +114,14 @@ const CharactersTable = () => {
           <CircularProgress />
         </div>
       }
-      {!loading && snapshots &&
+      {!loading && characters &&
         <>
-          <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell>{t('characters.tablehead.date')}</TableCell>
-                <TableCell>{t('characters.tablehead.name')}</TableCell>
-                <TableCell>{t('characters.tablehead.age')}</TableCell>
-                <TableCell>{t('characters.tablehead.occupation')}</TableCell>
-                <TableCell align="right">{t('characters.tablehead.role')}</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {snapshots.map((row) => (
-                <TableRow key={row.val().id}>
-                  <TableCell>{row.val().createdAt}</TableCell>
-                  <TableCell>{row.val().name}</TableCell>
-                  <TableCell>{row.val().age}</TableCell>
-                  <TableCell>{row.val().occupation}</TableCell>
-                  <TableCell align="right">{row.val().role}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <div className={classes.seeMore}>
-            <Link color="primary" href="#" onClick={preventDefault}>
-              {t('characters.button.seemore')}
-            </Link>
-          </div>
+          <MUIDataTable
+            title={t('characters.title')}
+            data={characters}
+            columns={columns}
+            options={options}
+          />
         </>
       }
     </>
